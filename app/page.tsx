@@ -1,9 +1,25 @@
+import Registration_form from "@/components/Registration_form";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      Recuritment Website for GFG-EVENT
+    <div className="relative min-h-screen bg-linear-to-b from-[#0B1810] to-[#00FF80] p-4">
+      <div className="absolute top-2 left-8">
+        <Image src="/image.png" alt="GFG Logo" width={200} height={200} />
+      </div>
+      <div className="flex my-10 min-h-screen items-center justify-center">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-white mb-2">
+              Recruitment for GFG Event
+            </h1>
+            <p className="text-lg text-white">
+              Join the GeeksforGeeks community at KIIT. Register now to be part of exciting opportunities!
+            </p>
+          </div>
+          <Registration_form />
+        </div>
+      </div>
     </div>
   );
 }
