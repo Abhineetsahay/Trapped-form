@@ -1,0 +1,93 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { dbConnect } from "@/lib/dbConnect";
+import Registration from "@/models/Registration";
+
+const registrationSchema = z.object({
+  username: z.string().min(2, "Name must be at least 2 characters"),
+  contact: z.string().regex(/^[0-9]{10}$/, "Contact must be a 10-digit number"),
+  email: z
+    .string()
+    .email("Invalid email format")
+    .regex(/@kiit\.ac\.in$/, "Only KIIT email allowed"),
+  year: z.enum(["1", "2", "3"], ),
+
+  resumeLink: z.string().optional(),
+
+  github: z.string().url().optional().or(z.literal("")),
+  linkedin: z.string().url().optional().or(z.literal("")),
+
+  whyGfg: z.string().min(5, "Please explain why you want to join"),
+
+  domain1: z.string().min(1, "Domain 1 is required"),
+  domain2: z.string().min(1, "Domain 2 is required"),
+});
+
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+
+    // Validate input
+    const parsed = registrationSchema.safeParse(body);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Validation Failed",
+          errors: parsed.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
+
+    const data = parsed.data;
+
+    // Extra rule for resume
+    if ((data.year === "2" || data.year === "3") && !data.resumeLink) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Resume is mandatory for 2nd and 3rd year students. Please provide a Google Drive link.",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Connect to DB
+    await dbConnect();
+
+    // Prevent duplicate email
+    const existing = await Registration.findOne({ email: data.email });
+    if (existing) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "This email is already registered",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Save to DB
+    const saved = await Registration.create(data);
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Registration submitted successfully!",
+        saved,
+      },
+      { status: 200 }
+    );
+
+  } catch (error) {
+    console.error("Server Error:", error);
+    return NextResponse.json(
+      { success: false, message: "Server Error", error },
+      { status: 500 }
+    );
+  }
+}
