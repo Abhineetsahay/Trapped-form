@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { z } from "zod";
-
 import {
   Field,
   FieldDescription,
@@ -21,6 +20,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { useRouter } from "next/navigation";
+
 const formSchema = z.object({
   username: z.string().min(2).max(50),
 });
@@ -38,6 +40,7 @@ const options = [
 ];
 
 const Registration_form = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     username: "",
     contact: "",
@@ -49,6 +52,8 @@ const Registration_form = () => {
     linkedin: "",
     resumeLink: "",
     year: "",
+    deviceId: "",
+    avatar: "",
   });
 
   const handleChange = (
@@ -58,9 +63,47 @@ const Registration_form = () => {
     if (id === "contact" && Number(value) < 0) return;
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
+  useEffect(() => {
+    const loadFingerprint = async () => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+
+      setFormData((prev) => ({ ...prev, deviceId: result.visitorId }));
+    };
+
+    loadFingerprint();
+  }, []);
+
+  useEffect(() => {
+    console.log(formData.deviceId);
+
+    const verifyDevice = async () => {
+      if (!formData.deviceId) return;
+
+      const res = await fetch("/api/check-device", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deviceId: formData.deviceId }),
+      });
+
+      const data = await res.json();
+
+      if (data.registered) {
+        router.push("/user-card");
+      }
+    };
+
+    verifyDevice();
+  }, [formData.deviceId]);
 
   const handleSubmit = async () => {
     try {
+      console.log("Submitting deviceId:", formData.deviceId);
+
+      if (!formData.deviceId) {
+        alert("Device verification failed. Please refresh the page.");
+        return;
+      }
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -68,17 +111,17 @@ const Registration_form = () => {
       });
 
       const data = await res.json();
+
       if (!res.ok) {
         console.log("Validation Errors:", data.errors || data.message);
         return;
       }
 
-      alert("Form Submitted Successfully!");
+      router.push("/user-card");
     } catch (error) {
       console.error("Submit Error:", error);
     }
   };
-
   return (
     <div className="w-full max-w-md text-white bg-black/20 p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl">
       <FieldSet>
@@ -135,7 +178,7 @@ const Registration_form = () => {
                 setFormData((prev) => ({ ...prev, year: value }))
               }
             >
-              <SelectTrigger className="bg-black/20 border-white/20 text-white [&>[data-placeholder]]:text-white/50">
+              <SelectTrigger className="bg-black/20 border-white/20 text-white *:data-placeholder:text-white/50">
                 <SelectValue placeholder="Select Year" />
               </SelectTrigger>
               <SelectContent>

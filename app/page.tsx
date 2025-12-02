@@ -2,6 +2,7 @@ import Registration_form from "@/components/Registration_form";
 import Image from "next/image";
 
 export default function Home() {
+  
   return (
     <div className="relative min-h-screen bg-linear-to-b from-[#0B1810] to-[#00FF80] p-4">
       <div className="absolute top-2 left-8">

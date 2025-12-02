@@ -10,7 +10,7 @@ const registrationSchema = z.object({
     .string()
     .email("Invalid email format")
     .regex(/@kiit\.ac\.in$/, "Only KIIT email allowed"),
-  year: z.enum(["1", "2", "3"], ),
+  year: z.enum(["1", "2", "3"]),
 
   resumeLink: z.string().optional(),
 
@@ -21,8 +21,9 @@ const registrationSchema = z.object({
 
   domain1: z.string().min(1, "Domain 1 is required"),
   domain2: z.string().min(1, "Domain 2 is required"),
+  deviceId: z.string().min(8, "Invalid device fingerprint"),
+  avatar: z.string().min(1, "Please select an avatar"),
 });
-
 
 export async function POST(request: Request) {
   try {
@@ -58,6 +59,21 @@ export async function POST(request: Request) {
 
     // Connect to DB
     await dbConnect();
+    const existingDevice = await Registration.findOne({
+      deviceId: data.deviceId,
+    });
+    console.log(existingDevice);
+    console.log(data.deviceId);
+    
+    if (existingDevice) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "This device has already submitted the form.",
+        },
+        { status: 400 }
+      );
+    }
 
     // Prevent duplicate email
     const existing = await Registration.findOne({ email: data.email });
@@ -82,7 +98,6 @@ export async function POST(request: Request) {
       },
       { status: 200 }
     );
-
   } catch (error) {
     console.error("Server Error:", error);
     return NextResponse.json(
