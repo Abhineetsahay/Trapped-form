@@ -22,7 +22,7 @@ const registrationSchema = z.object({
   domain1: z.string().min(1, "Domain 1 is required"),
   domain2: z.string().min(1, "Domain 2 is required"),
   deviceId: z.string().min(8, "Invalid device fingerprint"),
-  avatar: z.string().min(1, "Please select an avatar"),
+  avatar: z.string().optional(),
 });
 
 export async function POST(request: Request) {
