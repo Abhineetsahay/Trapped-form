@@ -22,6 +22,8 @@ import {
 
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { useRouter } from "next/navigation";
+import { avatars } from "@/lib/utils";
+import Image from "next/image";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -171,6 +173,34 @@ const Registration_form = () => {
               className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20"
             />
           </Field>
+
+          <Field>
+            <FieldLabel className="text-lg font-semibold">Choose Avatar</FieldLabel>
+            <div className="grid grid-cols-4 gap-4 mt-2">
+              {avatars.map((avatar) => (
+                <div
+                  key={avatar.id}
+                  onClick={() => setFormData((prev) => ({ ...prev, avatar: avatar.img }))}
+                  className={`relative w-16 h-16 m-auto cursor-pointer rounded-full overflow-hidden transition-all bg-transparent ${
+                    formData.avatar === avatar.img
+                      ? "ring-2 ring-green-500 scale-110 shadow-[0_0_10px_rgba(34,197,94,0.5)]"
+                      : "ring-0 hover:ring-2 hover:ring-white/50"
+                  }`}
+                >
+                  <Image
+                    src={avatar.img}
+                    alt={avatar.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+            <FieldDescription className="text-white/60">
+              Select an avatar for your profile.
+            </FieldDescription>
+          </Field>
+
           <Field>
             <FieldLabel className="text-lg font-semibold">Year</FieldLabel>
             <Select
