@@ -51,7 +51,6 @@ const Registration_form = () => {
     email: "",
     whyGfg: "",
     domain1: "",
-    domain2: "",
     github: "",
     linkedin: "",
     resumeLink: "",
@@ -353,27 +352,7 @@ const Registration_form = () => {
             </Select>
           </Field>
 
-          <Field>
-            <FieldLabel className="text-base sm:text-lg font-semibold">
-              Top Domain Preference 2
-            </FieldLabel>
-            <Select
-              onValueChange={(value) =>
-                setFormData((prev) => ({ ...prev, domain2: value }))
-              }
-            >
-              <SelectTrigger className="bg-black/20 border-white/20 text-white">
-                <SelectValue placeholder="Select Domain" />
-              </SelectTrigger>
-              <SelectContent>
-                {options.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {option}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </Field>
+         
 
           <p className="text-xs sm:text-sm text-white/60 mt-2 md:col-span-2">
             Note : If you want to change your preference there may be provision

@@ -15,7 +15,6 @@ export interface UserData {
   email: string;
   whyGfg: string;
   domain1: string;
-  domain2: string;
   github?: string;
   linkedin?: string;
   resumeLink?: string;

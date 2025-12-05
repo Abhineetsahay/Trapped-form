@@ -27,9 +27,6 @@ export async function GET(
     const domain1Users = await Registration.find({ domain1: { $regex: domainRegex } });
     console.log(`Found ${domain1Users.length} users in Domain 1`);
 
-    const domain2Users = await Registration.find({ domain2: { $regex: domainRegex } });
-    console.log(`Found ${domain2Users.length} users in Domain 2`);
-
     const section1 = domain1Users.map((u) => ({
       Name: u.username,
       Email: u.email,
@@ -39,24 +36,9 @@ export async function GET(
       Github: u.github,
       LinkedIn: u.linkedin,
       Resume: u.resumeLink,
-      Section: "Domain 1",
     }));
 
-    const section2 = domain2Users.map((u) => ({
-      Name: u.username,
-      Email: u.email,
-      Contact: u.contact,
-      Year: u.year,
-      "Why GFG?": u.whyGfg,
-      Github: u.github,
-      LinkedIn: u.linkedin,
-      Resume: u.resumeLink,
-      Section: "Domain 2",
-    }));
-
-    const blankRow = [{}];
-
-    const finalSheet = [...section1, ...blankRow, ...section2];
+    const finalSheet = section1;
 
     const worksheet = XLSX.utils.json_to_sheet(finalSheet);
     const workbook = XLSX.utils.book_new();

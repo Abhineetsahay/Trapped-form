@@ -15,7 +15,6 @@ const RegistrationSchema = new Schema(
     whyGfg: { type: String, required: true },
 
     domain1: { type: String, required: true },
-    domain2: { type: String, required: true },
     deviceId: { type: String, required: true, unique: true },
     avatar: { type: String },
 
