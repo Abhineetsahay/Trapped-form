@@ -8,7 +8,7 @@ import DomainShowcase from '@/components/domain/DomainShowcase'
 
 const landingPage = () => {
   return (
-    <div className="min-h-screen relative overflow-hidden font-sans text-white selection:bg-green-500 selection:text-black">
+    <div className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-green-500 selection:text-black">
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
@@ -21,7 +21,7 @@ const landingPage = () => {
       </div>
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
+      <nav className="sticky top-0 left-0 right-0 z-50 px-6 py-2">
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
