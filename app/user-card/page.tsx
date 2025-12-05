@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import { domToPng } from "modern-screenshot";
 
 export interface UserData {
   username: string;
@@ -21,6 +22,65 @@ export interface UserData {
 const UserCard = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isSharing, setIsSharing] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const handleShareToInstagram = async () => {
+    if (!cardRef.current) return;
+    
+    setIsSharing(true);
+    
+    try {
+      // Use modern-screenshot which has better CSS support
+      const dataUrl = await domToPng(cardRef.current, {
+        scale: 2,
+        backgroundColor: '#0B1810',
+      });
+
+      // Convert data URL to blob
+      const response = await fetch(dataUrl);
+      const blob = await response.blob();
+
+      // Check if Web Share API is available (mobile)
+      if (navigator.share && navigator.canShare) {
+        const file = new File([blob], 'gfg-trainer-card.png', { type: 'image/png' });
+        const shareData = {
+          files: [file],
+          title: 'My GFG Trainer Card',
+          text: '🎮 Check out my GFG League Trainer Card! Join the crew at @gfg_kiit #GFGLeague #TrainerCard',
+        };
+        
+        if (navigator.canShare(shareData)) {
+          try {
+            await navigator.share(shareData);
+            setIsSharing(false);
+            return;
+          } catch (err) {
+            console.log('Share cancelled or failed:', err);
+          }
+        }
+      }
+
+      // Fallback: Download the image
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `gfg-trainer-card-${userData?.username || 'trainer'}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      // Show a toast/alert with instructions
+      alert('📸 Your card has been downloaded!\n\nTo share on Instagram:\n1. Open Instagram\n2. Create a new Story or Post\n3. Select the downloaded image\n4. Tag @gfg_kiit and use #GFGLeague');
+      
+      setIsSharing(false);
+    } catch (error) {
+      console.error('Error generating image:', error);
+      alert('Failed to generate image. Please try again.');
+      setIsSharing(false);
+    }
+  };
 
   useEffect(() => {
     const getUserData = async () => {
@@ -86,7 +146,7 @@ const UserCard = () => {
           </p>
         </div>
 
-        <div className="relative w-full max-w-[380px] aspect-[9/15] rounded-[24px] overflow-hidden shadow-2xl">
+        <div ref={cardRef} className="relative w-full max-w-[380px] aspect-[9/15] rounded-[24px] overflow-hidden shadow-2xl">
           {/* CARD BACKGROUND */}
           <Image
             src="/card-bg.png"
@@ -176,8 +236,12 @@ const UserCard = () => {
 
         {/* Share Button - Outside */}
         <div className="mt-8 w-full max-w-[300px]">
-          <button className="w-full py-3 bg-[#1a4025] border-2 border-[#c5a059] text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-[#2a5c3f] transition-colors uppercase tracking-wide text-sm">
-            Share it on your instagram
+          <button 
+            onClick={handleShareToInstagram}
+            disabled={isSharing}
+            className="w-full py-3 bg-[#1a4025] border-2 border-[#c5a059] text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-[#2a5c3f] transition-colors uppercase tracking-wide text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSharing ? 'Generating...' : 'Share it on your instagram'}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
