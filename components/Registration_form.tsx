@@ -121,61 +121,16 @@ const Registration_form = () => {
     }
   };
   return (
-    <div className="w-full max-w-md text-white bg-black/20 p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl">
+    <div className="w-full max-w-5xl text-white bg-black/20 p-4 sm:p-6 lg:p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-2xl">
       <FieldSet>
-        <FieldGroup className="space-y-2">
-          <Field>
-            <FieldLabel htmlFor="username" className="text-lg font-semibold">
-              Full Name
-            </FieldLabel>
-            <Input
-              id="username"
-              type="text"
-              value={formData.username}
-              onChange={handleChange}
-              placeholder="Your name"
-              className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20"
-            />
-          </Field>
-
-          <Field>
-            <FieldLabel htmlFor="contact" className="text-lg font-semibold">
-              Contact Info
-            </FieldLabel>
-            <Input
-              id="contact"
-              type="number"
-              value={formData.contact}
-              min="1"
-              onChange={handleChange}
-              placeholder="Phone number"
-              className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20 
-             [appearance:textfield] 
-             [&::-webkit-outer-spin-button]:appearance-none 
-             [&::-webkit-inner-spin-button]:appearance-none"
-            />
-          </Field>
-
-          <Field>
-            <FieldLabel htmlFor="email" className="text-lg font-semibold">
-              Email Info
-            </FieldLabel>
-            <Input
-              id="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="rollno@kiit.ac.in"
-              className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20"
-            />
-          </Field>
-
-          <Field>
-            <FieldLabel className="text-lg font-semibold">
+        <FieldGroup className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3">
+          
+          <Field className="md:col-span-2">
+            <FieldLabel className="text-base sm:text-lg font-semibold">
               Choose Avatar
             </FieldLabel>
 
-            <div className="grid grid-cols-4 gap-4 mt-2">
+            <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-3 mt-2">
               {avatars.map((avatar) => {
                 const optimizedImg = avatar.img.replace(
                   "/upload/",
@@ -188,7 +143,7 @@ const Registration_form = () => {
                     onClick={() =>
                       setFormData((prev) => ({ ...prev, avatar: avatar.img }))
                     }
-                    className={`relative w-16 h-16 m-auto cursor-pointer rounded-full overflow-hidden transition-all bg-transparent ${
+                    className={`relative w-14 h-14 sm:w-16 sm:h-16 m-auto cursor-pointer rounded-full overflow-hidden transition-all bg-transparent ${
                       formData.avatar === avatar.img
                         ? "ring-2 ring-green-500 scale-110 shadow-[0_0_10px_rgba(34,197,94,0.5)]"
                         : "ring-0 hover:ring-2 hover:ring-white/50"
@@ -208,13 +163,58 @@ const Registration_form = () => {
               })}
             </div>
 
-            <FieldDescription className="text-white/60">
+            <FieldDescription className="text-xs sm:text-sm text-white/60 mt-1">
               Select an avatar for your profile.
             </FieldDescription>
           </Field>
+          <Field>
+            <FieldLabel htmlFor="username" className="text-base sm:text-lg font-semibold">
+              Full Name
+            </FieldLabel>
+            <Input
+              id="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Your name"
+              className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20"
+            />
+          </Field>
 
           <Field>
-            <FieldLabel className="text-lg font-semibold">Year</FieldLabel>
+            <FieldLabel htmlFor="contact" className="text-base sm:text-lg font-semibold">
+              Contact Info
+            </FieldLabel>
+            <Input
+              id="contact"
+              type="number"
+              value={formData.contact}
+              min="1"
+              onChange={handleChange}
+              placeholder="Phone number"
+              className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20 
+             [appearance:textfield] 
+             [&::-webkit-outer-spin-button]:appearance-none 
+             [&::-webkit-inner-spin-button]:appearance-none"
+            />
+          </Field>
+
+          <Field>
+            <FieldLabel htmlFor="email" className="text-base sm:text-lg font-semibold">
+              Email Info
+            </FieldLabel>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="rollno@kiit.ac.in"
+              className="bg-black/20 border-white/20 text-white placeholder:text-white/40 focus:border-green-400 focus:ring-green-400/20"
+            />
+          </Field>
+
+          <Field>
+            <FieldLabel className="text-base sm:text-lg font-semibold">Year</FieldLabel>
             <Select
               onValueChange={(value) =>
                 setFormData((prev) => ({ ...prev, year: value }))
@@ -229,13 +229,13 @@ const Registration_form = () => {
                 <SelectItem value="3">3</SelectItem>
               </SelectContent>
             </Select>
-            <FieldDescription className="text-white/60">
+            <FieldDescription className="text-xs sm:text-sm text-white/60 mt-1">
               Select your current academic year.
             </FieldDescription>
           </Field>
 
           <Field>
-            <FieldLabel htmlFor="resumeLink" className="text-lg font-semibold">
+            <FieldLabel htmlFor="resumeLink" className="text-base sm:text-lg font-semibold">
               Resume (Google Drive Link)
             </FieldLabel>
 
@@ -255,7 +255,7 @@ const Registration_form = () => {
               required={formData.year === "2" || formData.year === "3"}
             />
 
-            <FieldDescription className="text-white/60">
+            <FieldDescription className="text-xs sm:text-sm text-white/60 mt-1">
               {formData.year === "1"
                 ? "Optional for 1st year students."
                 : formData.year === "2" || formData.year === "3"
@@ -265,7 +265,7 @@ const Registration_form = () => {
           </Field>
 
           <Field>
-            <FieldLabel htmlFor="github" className="text-lg font-semibold">
+            <FieldLabel htmlFor="github" className="text-base sm:text-lg font-semibold">
               GitHub Profile (Optional)
             </FieldLabel>
             <Input
@@ -279,7 +279,7 @@ const Registration_form = () => {
           </Field>
 
           <Field>
-            <FieldLabel htmlFor="linkedin" className="text-lg font-semibold">
+            <FieldLabel htmlFor="linkedin" className="text-base sm:text-lg font-semibold">
               LinkedIn Profile (Optional)
             </FieldLabel>
             <Input
@@ -292,8 +292,8 @@ const Registration_form = () => {
             />
           </Field>
 
-          <Field>
-            <FieldLabel htmlFor="whyGfg" className="text-lg font-semibold">
+          <Field className="md:col-span-2">
+            <FieldLabel htmlFor="whyGfg" className="text-base sm:text-lg font-semibold">
               Why GFG?
             </FieldLabel>
             <Textarea
@@ -306,7 +306,7 @@ const Registration_form = () => {
           </Field>
 
           <Field>
-            <FieldLabel className="text-lg font-semibold">
+            <FieldLabel className="text-base sm:text-lg font-semibold">
               Top Domain Preference 1
             </FieldLabel>
             <Select
@@ -328,7 +328,7 @@ const Registration_form = () => {
           </Field>
 
           <Field>
-            <FieldLabel className="text-lg font-semibold">
+            <FieldLabel className="text-base sm:text-lg font-semibold">
               Top Domain Preference 2
             </FieldLabel>
             <Select
@@ -349,7 +349,7 @@ const Registration_form = () => {
             </Select>
           </Field>
 
-          <p className="text-sm text-black/60 mt-4">
+          <p className="text-xs sm:text-sm text-white/60 mt-2 md:col-span-2">
             Note: The first preferred domain will involve a hackathon-based
             evaluation. The second and third preferred domains will follow an
             interview-based evaluation format.
@@ -358,7 +358,7 @@ const Registration_form = () => {
           <Button
             type="submit"
             onClick={handleSubmit}
-            className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-semibold"
+            className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold md:col-span-2"
           >
             Submit Registration
           </Button>

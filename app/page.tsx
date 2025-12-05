@@ -9,12 +9,12 @@ export default function Home() {
         <Image src="/image.png" alt="GFG Logo" width={200} height={200} className="w-20 sm:w-28 md:w-40 lg:w-48 h-auto" />
       </div>
       <div className="flex mt-20 sm:mt-16 md:mt-10 min-h-screen items-center justify-center">
-        <div className="w-full max-w-md space-y-8">
+        <div className="w-full max-w-6xl space-y-8 px-4">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-2">
-              Recruitment for GFG Event
+            <h1 className="text-3xl sm:text-4xl font-semibold text-white/90 mb-3">
+              League for geeks : A hackathon based recruitment event.
             </h1>
-            <p className="text-lg text-white">
+            <p className="text-base sm:text-lg text-white/70 font-light">
               Join the GeeksforGeeks community at KIIT. Register now to be part of exciting opportunities!
             </p>
           </div>
