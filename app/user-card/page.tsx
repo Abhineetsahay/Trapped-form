@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import cardBg from "@/public/card-bg.png";
 
 export interface UserData {
   username: string;
@@ -21,102 +20,143 @@ export interface UserData {
 
 const UserCard = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUserData = async () => {
       try {
         const id = localStorage.getItem("id");
-        if (!id) return;
+        if (!id) {
+            setLoading(false);
+            return;
+        }
 
-        const res = await fetch("/api/user/get-user", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id }),
-        });
-
+        const res = await fetch(`/api/register?id=${id}`);
         const data = await res.json();
-        if (data.success) setUserData(data.data);
+        if (data.success) {
+            setUserData(data.data);
+        }
       } catch (error) {
         console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     getUserData();
   }, []);
 
+  if (loading) {
+      return <div className="min-h-screen flex items-center justify-center bg-black text-green-500 font-bold text-xl">Loading Trainer Data...</div>;
+  }
+
+  if (!userData) {
+      return <div className="min-h-screen flex items-center justify-center bg-black text-red-500 font-bold text-xl">Trainer Data Not Found. Please Register.</div>;
+  }
+
   return (
-    <div className="relative min-h-screen bg-linear-to-b from-[#0B1810] to-[#00FF80] p-4">
+    <div className="relative min-h-screen bg-linear-to-b from-[#0B1810] to-[#00FF80] p-4 flex flex-col items-center justify-center">
       {/* GFG Logo */}
-      <div className="absolute top-2 left-4 md:left-8 z-10">
-        <Image src="/image.png" alt="GFG Logo" width={200} height={200} className="w-20 sm:w-28 md:w-40 lg:w-48 h-auto" />
+      <div className="absolute top-4 left-4 md:left-8 z-10">
+        <Image src="/image.png" alt="GFG Logo" width={200} height={200} className="w-20 sm:w-28 md:w-40 lg:w-48 h-auto object-contain" />
       </div>
 
       <div className="w-full flex flex-col items-center py-10 px-4">
         {/* Congratulatory Message - Above the card */}
-        <div className="text-center mb-6">
-          <p className="text-white font-bold text-2xl">
+        <div className="text-center mb-8">
+          <p className="text-white font-bold text-2xl md:text-3xl drop-shadow-lg">
             🎉 Congrats on your registration!
           </p>
-          <p className="text-green-300 text-lg mt-2">
+          <p className="text-green-300 text-lg mt-2 font-medium drop-shadow-md">
             See you, Trainer! Your journey begins now! 🚀
           </p>
         </div>
 
-        <div className="relative w-full max-w-[420px]">
-        {/* CARD BACKGROUND */}
-        <Image
-          src={cardBg}
-          alt="Pokemon Card"
-          className="w-full h-auto object-contain pointer-events-none select-none"
-          priority
-        />
+                <div className="relative w-full max-w-[380px] aspect-[9/15] rounded-[24px] overflow-hidden shadow-2xl">
+            {/* CARD BACKGROUND */}
+            <Image
+            src="/card-bg.png"
+            alt="Pokemon Card Background"
+            fill
+            className="object-cover pointer-events-none select-none z-0"
+            priority
+            />
+            
+            {/* OVERLAY CONTENT */}
+            <div className="absolute inset-0 flex flex-col z-10 font-serif">
+                
+                {/* Header Area */}
+                <div className="h-[14%] flex items-center justify-center pt-5">
+                     <h1 className="text-[#1a4025] font-bold text-xl tracking-widest uppercase drop-shadow-sm">
+                        STAGE 2 🌿 EVOLVE
+                     </h1>
+                </div>
 
-        {/* OVERLAY CONTENT */}
-        <div className="absolute inset-0 px-6 pt-6">
-          <div className="text-center">
-            <h1 className="text-green-200 font-extrabold text-xl tracking-wide">
-              STAGE 2 🌿 EVOLVE
-            </h1>
-          </div>
+                {/* Main Info Box Area */}
+                <div className="h-[48%] px-8 pt-6 pb-2 flex">
+                    {/* Left: Trainer */}
+                    <div className="w-1/2 flex flex-col items-center">
+                        <span className="text-[10px] font-bold text-[#1a4025] mb-1 tracking-widest">TRAINER</span>
+                        <div className="w-28 h-28 border-2 border-green-400 p-1 shadow-sm rounded-full">
+                            <div className="relative w-full h-full rounded-full overflow-hidden">
+                                <Image
+                                    src={userData.avatar || "/default-avatar.png"}
+                                    alt="avatar"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
 
-          {/* Trainer Info */}
-          <div className="flex mt-6 justify-between">
-            <div className="w-24 h-24 rounded-full overflow-hidden bg-white border-2 border-green-300">
-              <Image
-                src={userData?.avatar || "/default-avatar.png"}
-                alt="avatar"
-                width={120}
-                height={120}
-                className="object-cover"
-              />
+                    {/* Right: Info */}
+                    <div className="w-1/2 flex flex-col pl-4 pt-1">
+                        <div className="text-center mb-4">
+                             <span className="text-[10px] font-bold text-[#1a4025] tracking-widest">INFO</span>
+                        </div>
+                        
+                        <div className="flex flex-col gap-4">
+                            <div>
+                                <h3 className="font-bold text-[#1a4025] text-xs tracking-wider mb-0.5">NAME :</h3>
+                                <p className="text-black font-bold text-lg leading-none uppercase truncate">{userData.username}</p>
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-[#1a4025] text-xs tracking-wider mb-0.5">LEAGUE :</h3>
+                                <p className="text-black font-bold text-lg leading-none uppercase truncate">{userData.domain1}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer Area */}
+                <div className="flex-1 px-6 pt-2 pb-4 flex flex-col">
+                    
+                    {/* QR Row */}
+                    <div className="flex items-center justify-between mb-2">
+                        <p className="text-[9px] text-white font-bold w-20 leading-tight text-center drop-shadow-md">
+                            Join the Crew & Earn Your Badges!
+                        </p>
+                        
+                        {/* QR Code Box */}
+                        <div className="w-20 h-20 bg-gray-300 border-2 border-white/50 shadow-inner mx-2">
+                             {/* Placeholder for QR */}
+                        </div>
+
+                        <p className="text-[9px] text-white font-bold w-20 leading-tight text-center drop-shadow-md">
+                            Catch yours - get your own pokemon card by registering!!
+                        </p>
+                    </div>
+                </div>
             </div>
-
-            <div className="text-white text-right">
-              <h3 className="font-bold">NAME :</h3>
-              <p className="text-green-200">{userData?.username}</p>
-
-              <h3 className="font-bold mt-2">LEAGUE :</h3>
-              <p className="text-green-200">{userData?.domain1}</p>
-            </div>
-          </div>
-
-          {/* Middle messages */}
-          <div className="flex justify-between text-xs text-white/90 mt-6">
-            <p>Join the Crew & Earn Your Badges!</p>
-            <p>Catch yours — get your own Pokémon card!</p>
-          </div>
-
-          {/* Stars */}
-          <div className="text-center text-white mt-4">⭐⭐⭐</div>
-
-          {/* Share button */}
-          <div className="text-center mt-6">
-            <button className="px-5 py-2 bg-green-600 rounded-xl text-white font-semibold hover:bg-green-700">
-              Share it on your Instagram
-            </button>
-          </div>
         </div>
-      </div>
+
+        {/* Share Button - Outside */}
+        <div className="mt-8 w-full max-w-[300px]">
+            <button className="w-full py-3 bg-[#1a4025] border-2 border-[#c5a059] text-white font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 hover:bg-[#2a5c3f] transition-colors uppercase tracking-wide text-sm">
+                Share it on your instagram
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            </button>
+        </div>
       </div>
     </div>
   );

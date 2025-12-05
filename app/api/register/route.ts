@@ -106,3 +106,35 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET(request: Request) {
+  try {
+    await dbConnect();
+
+    // Get URL parameters
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (id) {
+      const data = await Registration.findById(id);
+      if (!data) {
+        return NextResponse.json(
+          { success: false, message: "Registration not found" },
+          { status: 404 }
+        );
+      }
+      return NextResponse.json({ success: true, data }, { status: 200 });
+    }
+
+    // If no ID, fetch all
+    const data = await Registration.find().sort({ createdAt: -1 });
+    return NextResponse.json({ success: true, data }, { status: 200 });
+
+  } catch (error) {
+    console.error("Server Error:", error);
+    return NextResponse.json(
+      { success: false, message: "Server Error", error },
+      { status: 500 }
+    );
+  }
+}
