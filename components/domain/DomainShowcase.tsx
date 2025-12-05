@@ -13,63 +13,63 @@ const MOCK_DOMAINS: Domain[] = [
         name: 'WEB DEV',
         description: 'Building the web of tomorrow with modern technologies and frameworks. From frontend aesthetics to backend robustness.',
         type: 'Tech',
-        image: '/pikachu.png'
+        image: '/webDev.png'
     },
     {
         id: '002',
         name: 'APP DEV',
         description: 'Creating robust mobile applications for Android and iOS platforms using modern frameworks like Flutter and React Native.',
         type: 'Tech',
-        image: '/nilapoke.png'
+        image: '/app-dev.jpeg'
     },
     {
         id: '009',
         name: 'AI/ML',
         description: 'Exploring the frontiers of Artificial Intelligence and Machine Learning. Building smart systems that learn and adapt.',
         type: 'Tech',
-        image: '/pikachu.png'
+        image: '/ai-ml.jpeg'
     },
     {
         id: '010',
         name: 'SYSTEMS DEV',
         description: 'Diving deep into low-level programming, operating systems, and system architecture. Optimizing performance at the core.',
         type: 'Tech',
-        image: '/nilapoke.png'
+        image: '/systems-dev.png'
     },
     {
         id: '011',
         name: 'BLOCKCHAIN',
         description: 'Decentralizing the future with Web3 technologies. Smart contracts, DApps, and the revolution of trust.',
         type: 'Tech',
-        image: '/pikachu.png'
+        image: '/blockchain.jpeg'
     },
     {
         id: '012',
         name: 'GAME DEV',
         description: 'Crafting immersive interactive experiences. From game physics to storytelling, bringing virtual worlds to life.',
         type: 'Tech',
-        image: '/nilapoke.png'
+        image: '/game-dev.jpg'
     },
     {
         id: '013',
         name: 'CLOUD',
         description: 'Mastering cloud infrastructure and DevOps. Scalable solutions, containerization, and continuous deployment.',
         type: 'Tech',
-        image: '/pikachu.png'
+        image: '/cloud.jpeg'
     },
     {
         id: '014',
         name: 'CYBERSECURITY',
         description: 'Protecting digital assets and securing networks. Ethical hacking, cryptography, and defense against cyber threats.',
         type: 'Tech',
-        image: '/nilapoke.png'
+        image: '/cyber.png'
     },
     {
         id: '015',
         name: 'COMPETITIVE PROGRAMMING',
         description: 'Solving complex algorithmic challenges with speed and efficiency. Mastering data structures and algorithms.',
         type: 'Tech',
-        image: '/pikachu.png'
+        image: '/cp.jpeg'
     },
     {
         id: '003',
@@ -83,35 +83,35 @@ const MOCK_DOMAINS: Domain[] = [
         name: 'MARKETING',
         description: 'Strategizing and executing campaigns to promote events and the chapter. Reaching out to the target audience effectively.',
         type: 'Non-Tech',
-        image: '/nilapoke.png'
+        image: '/marketing.png'
     },
     {
         id: '005',
         name: 'SOCIAL MEDIA',
         description: 'Managing online presence and engaging with the community across platforms. Creating content that resonates.',
         type: 'Non-Tech',
-        image: '/pikachu.png'
+        image: '/socmed.png'
     },
     {
         id: '006',
         name: 'SPONSORSHIP',
         description: 'Building partnerships and securing support for events and initiatives. Networking with industry leaders.',
         type: 'Non-Tech',
-        image: '/nilapoke.png'
+        image: '/sponsorship.jpeg'
     },
     {
         id: '007',
         name: 'BROADCASTING',
         description: 'Managing audio-visual content and live streaming of events. Capturing moments and sharing them with the world.',
         type: 'Non-Tech',
-        image: '/pikachu.png'
+        image: '/broadcasting.png'
     },
     {
         id: '008',
         name: 'ADMINISTRATION',
         description: 'Ensuring smooth operations and management of the chapter resources. The backbone of the organization.',
         type: 'Non-Tech',
-        image: '/nilapoke.png'
+        image: '/admin.jpeg'
     }
 ]
 
@@ -225,19 +225,19 @@ export default function DomainShowcase() {
                         {activeDomain.description}
                     </p>
                     
-                    <div className="mb-2">
+                    {/* <div className="mb-2">
                         <h3 className="text-xl md:text-2xl font-black text-gfg-text-primary/40 uppercase">TYPE</h3>
                     </div>
                     <div className="inline-block bg-gfg-accent-1 px-8 md:px-12 py-2 md:py-3 rounded-xl border-b-4 border-gfg-accent-2/50">
                         <span className="text-white font-black text-base md:text-lg uppercase tracking-widest">{activeDomain.type}</span>
-                    </div>
+                    </div> */}
                 </div>
-
+{/* 
                 <div className="w-full md:w-auto flex items-end justify-end self-end mt-4 md:mt-0">
                      <button className="w-full md:w-auto bg-gfg-accent-2 text-white px-6 md:px-8 py-3 md:py-4 rounded-2xl font-black text-lg md:text-xl uppercase tracking-wider border-b-8 border-gfg-button-shadow hover:translate-y-1 hover:border-b-4 active:border-b-0 active:translate-y-2 transition-all shadow-xl">
                       I CHOOSE YOU!
                     </button>
-                </div>
+                </div> */}
             </div>
 
         </div>
