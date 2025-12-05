@@ -33,11 +33,13 @@ export async function POST(request: Request) {
     const parsed = registrationSchema.safeParse(body);
 
     if (!parsed.success) {
+      const flat = parsed.error.flatten().fieldErrors;
+      const firstError = Object.values(flat)[0]?.[0] || "Validation Failed";
+
       return NextResponse.json(
         {
           success: false,
-          message: "Validation Failed",
-          errors: parsed.error.flatten().fieldErrors,
+          message: firstError,
         },
         { status: 400 }
       );
@@ -64,7 +66,7 @@ export async function POST(request: Request) {
     });
     console.log(existingDevice);
     console.log(data.deviceId);
-    
+
     if (existingDevice) {
       return NextResponse.json(
         {
@@ -113,7 +115,7 @@ export async function GET(request: Request) {
 
     // Get URL parameters
     const { searchParams } = new URL(request.url);
-    const id = searchParams.get('id');
+    const id = searchParams.get("id");
 
     if (id) {
       const data = await Registration.findById(id);
@@ -129,7 +131,6 @@ export async function GET(request: Request) {
     // If no ID, fetch all
     const data = await Registration.find().sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data }, { status: 200 });
-
   } catch (error) {
     console.error("Server Error:", error);
     return NextResponse.json(
