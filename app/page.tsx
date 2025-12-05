@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import DomainShowcase from "@/components/domain/DomainShowcase";
-import gfgLogo from "@/public/image.png"
+import gfgLogo from "@/public/image.png";
+import background from "@/public/background.png";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -17,15 +18,12 @@ const Home = () => {
   return (
     <div className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-green-500 selection:text-black">
       {/* Background Image */}
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="/background.jpg"
-          alt="Pokemon World Background"
-          fill
-          className="object-cover brightness-75"
-          priority
-        />
-      </div>
+      <div
+        className="fixed inset-0 -z-10 bg-cover bg-no-repeat bg-center brightness-75"
+        style={{
+          backgroundImage: `url(${background.src})`,
+        }}
+      ></div>
 
       {/* Navbar */}
       <nav className="sticky top-0 left-0 right-0 z-50 px-6 py-2">
@@ -58,19 +56,24 @@ const Home = () => {
                 className="hover:text-green-400 transition-colors duration-300 relative group"
               >
                 {link.name}
-               
               </Link>
             ))}
           </div>
 
           {/* Contact Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-full text-xs font-bold transition-colors shadow-[0_0_15px_rgba(22,163,74,0.5)] hover:shadow-[0_0_25px_rgba(22,163,74,0.8)]"
+          <Link
+            href="https://www.instagram.com/gfg_kiit/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Contact Us
-          </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-full text-xs font-bold transition-colors shadow-[0_0_15px_rgba(22,163,74,0.5)] hover:shadow-[0_0_25px_rgba(22,163,74,0.8)]"
+            >
+              Contact Us
+            </motion.button>
+          </Link>
         </motion.div>
       </nav>
 
@@ -133,9 +136,10 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="text-base md:text-xl leading-relaxed font-medium text-white p-8 rounded-2xl "
               >
-                This is the first trial of our recruitment journey. A Pokémon
-                inspired hackathon crafted to test how you think, how you build,
-                and how you adapt. Not just skill, but instinct.
+                This is the first trial of our recruitment journey.A first of
+                it&apos;s kind, Pokémon inspired, hackathon based recruitment
+                event. crafted to test how you think, how you build, and how you
+                adapt. Not just skill, but instinct.
               </motion.p>
 
               {/* Register Button */}
