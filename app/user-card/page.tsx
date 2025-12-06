@@ -124,6 +124,7 @@ const UserCard = () => {
     }
   }, [loading, userData, router]);
 
+ 
   if (!userData) {
     return null;
   }
@@ -207,7 +208,9 @@ const UserCard = () => {
                       />
                     ) : (
                       <Image
-                        src={"https://res.cloudinary.com/gfg-members/image/upload/v1764707505/Ash_p1tl7x.png"}
+                        src={
+                          "https://res.cloudinary.com/gfg-members/image/upload/v1764707505/Ash_p1tl7x.png"
+                        }
                         alt="avatar"
                         fill
                         className="object-cover"

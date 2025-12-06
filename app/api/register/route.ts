@@ -77,6 +77,7 @@ export async function POST(request: Request) {
     // Save to DB
     const saved = await Registration.create(data);
 
+
     return NextResponse.json(
       {
         success: true,
