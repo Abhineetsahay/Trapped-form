@@ -91,6 +91,8 @@ const Registration_form = () => {
       const data = await res.json();
 
       if (data.registered) {
+        localStorage.setItem("id",data.id);
+        localStorage.setItem("isRegistrated","true");
         router.push("/user-card");
       }
     };
