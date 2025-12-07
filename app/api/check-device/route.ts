@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     await dbConnect();
     const record = await Registration.findOne({ deviceId });
     
-    return NextResponse.json({ registered: Boolean(record) });
+    return NextResponse.json({ registered: Boolean(record),id:record._id });
   } catch (error) {
     console.error("Server Error:", error);
     return NextResponse.json(
