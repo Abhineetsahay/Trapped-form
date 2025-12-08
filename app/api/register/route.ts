@@ -20,7 +20,7 @@ const registrationSchema = z.object({
   whyGfg: z.string().min(5, "Please explain why you want to join"),
 
   domain1: z.string().min(1, "Domain 1 is required"),
-  deviceId: z.string().min(8, "Invalid device fingerprint"),
+  deviceId: z.string().optional(),
   avatar: z.string().optional(),
 });
 

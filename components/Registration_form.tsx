@@ -123,15 +123,15 @@ const Registration_form = () => {
       localStorage.setItem("id", data.saved._id);
       localStorage.setItem("isRegistrated", "true");
 
-      fetch("/api/save-to-sheet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data.saved),
-      }).catch((err) => console.log("Sheet Sync Error:", err));
+      // fetch("/api/save-to-sheet", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(data.saved),
+      // }).catch((err) => console.log("Sheet Sync Error:", err));
 
       toast.success("Successfully registered");
       setTimeout(() => {
-        router.push("/");
+        router.push("/user-card");
       }, 1000);
     } catch (error) {
       console.error("Submit Error:", error);
