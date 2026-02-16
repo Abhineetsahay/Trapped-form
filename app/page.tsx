@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import gfgLogo from "@/public/image.png";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import background from "@/public/trapped-bg.png";
+
 const whatsappGroupLink="https://chat.whatsapp.com/DaeP2oi13EE9kRT5GeCjf1"
 // Navbar links
 const navLinks = [
@@ -24,8 +26,17 @@ const Home = () => {
       className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-cyan-500 selection:text-black"
       id="home"
     >
-      {/* Background Gradient */}
-      <div className="fixed inset-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-[#0a0a0a] to-black z-0 pointer-events-none" />
+            {/* Background */}
+      <div className="fixed inset-0 -z-10">
+        <Image
+          src={background}
+          alt="Background"
+          fill
+          priority
+          placeholder="blur"
+          className="object-cover brightness-75"
+        />
+      </div>
 
       {/* Content Wrapper */}
       <div className="relative z-10 w-full">
@@ -120,10 +131,10 @@ const Home = () => {
             className="relative w-full max-w-lg aspect-[2/1]"
           >
             <Image
-              src="/trapped-hero-image.png"
-              alt="League For Geeks"
+              src="/trapped-title.png"
+              alt="Trapped 2.0"
               fill
-              className="object-contain drop-shadow-[0_0_50px_rgba(255,255,0,0.3)]"
+              className="object-contain drop-shadow-[0_0_50px_rgba(135,206,235,0.3)]"
               priority
             />
           </motion.div>
