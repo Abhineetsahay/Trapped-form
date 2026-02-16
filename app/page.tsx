@@ -46,7 +46,7 @@ const Home = () => {
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-5xl mx-auto bg-black/70 backdrop-blur-lg rounded-full px-6 py-3 flex justify-between items-center border border-white/10 shadow-lg"
+          className="max-w-7xl mx-auto bg-black/40 backdrop-blur-xl rounded-full px-6 py-3 flex justify-between items-center border border-white/5 shadow-2xl shadow-blue-900/10"
         >
           {/* Logo */}
           <div className="flex items-center gap-3">
@@ -96,25 +96,26 @@ const Home = () => {
         {/* Mobile Dropdown */}
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="md:hidden bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl mt-2 mx-2 px-4 py-4 flex flex-col gap-4 text-gray-300"
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="md:hidden bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-3xl mt-4 mx-4 p-6 flex flex-col gap-6 shadow-2xl z-50 absolute right-0 left-0"
           >
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-cyan-400"
+                className="text-lg font-medium text-gray-200 hover:text-cyan-400 border-b border-white/5 pb-2 last:border-0"
               >
                 {link.name}
               </Link>
             ))}
 
-            <Link href="https://www.instagram.com/gfg_kiit/" target="_blank">
-              <button className="w-full bg-blue-600 py-2 rounded-lg text-white font-semibold">
+            <Link href="https://www.instagram.com/gfg_kiit/" target="_blank" onClick={() => setMenuOpen(false)}>
+              <div className="w-full bg-gradient-to-r from-blue-600 to-blue-500 py-3 rounded-xl text-white font-bold text-center shadow-lg shadow-blue-500/20">
                 Contact Us
-              </button>
+              </div>
             </Link>
           </motion.div>
         )}
@@ -125,16 +126,16 @@ const Home = () => {
         <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center gap-12">
           {/* HERO IMAGE */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-lg aspect-[2/1]"
+            initial={{ scale: 0.8, opacity: 0, filter: "blur(10px)" }}
+            animate={{ scale: 1, opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.2, type: "spring" }}
+            className="relative w-full max-w-3xl aspect-[16/9] md:aspect-[21/9] -mb-10 sm:mb-0"
           >
             <Image
               src="/trapped-title.png"
               alt="Trapped 2.0"
               fill
-              className="object-contain drop-shadow-[0_0_50px_rgba(135,206,235,0.3)]"
+              className="object-contain drop-shadow-[0_0_80px_rgba(56,189,248,0.4)]"
               priority
             />
           </motion.div>
@@ -144,74 +145,59 @@ const Home = () => {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="text-center max-w-2xl z-10 space-y-8 flex flex-col items-center"
+            className="text-center max-w-4xl z-10 flex flex-col items-center gap-8 md:gap-12"
           >
-            <p className="text-base md:text-xl leading-relaxed font-medium">
-              Gather your friends for the best escape room event of KIIT. Calling
-              all problem solvers, logic leaders and those who want to have a
-              good time. Brought to you by the Game Development Domain of GFG
-              KIIT.
-              <br />
-              <br />
-              <span className="font-bold text-blue-400 text-lg">
-                Event Date:
-              </span>
-              <br />
-              <span className="block mt-1">
-                • <span className="font-semibold text-blue-200">21st February (Saturday)</span>{" "}
-                — Hackathon
-              </span>
-            </p>
+            {/* Description Text */}
+            <div className="space-y-6">
+              <p className="text-lg md:text-2xl leading-relaxed font-light text-gray-100 max-w-3xl mx-auto drop-shadow-lg">
+                Gather your friends for the best escape room event of KIIT. Calling
+                all problem solvers, logic leaders, and those who want to have a
+                good time. <br className="hidden md:block" />
+                <span className="text-cyan-400 font-normal">
+                  Brought to you by the Game Development Domain of GFG KIIT.
+                </span>
+              </p>
 
-            {/* Outreach Group Section */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
-              className="mt-2 flex flex-col items-center relative"
-            >
-              {/* Glow Effect */}
-              <motion.div
-                animate={{ opacity: [0.4, 0.7, 0.4] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-                className="absolute w-40 h-40 bg-blue-600/20 blur-3xl rounded-full -z-10"
-              />
+              {/* Event Date Badge */}
+              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-blue-900/40 border border-blue-500/30 backdrop-blur-md">
+                <span className="text-blue-300 font-semibold uppercase tracking-wider text-sm">
+                  Event Date
+                </span>
+                <div className="w-px h-4 bg-blue-500/30"></div>
+                <span className="text-white font-medium">21st February (Saturday)</span>
+              </div>
+            </div>
 
-              <motion.a
-                href={whatsappGroupLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.07 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block bg-slate-800 hover:bg-slate-700 text-blue-100 px-6 py-2 rounded-full font-semibold text-sm shadow-lg border border-slate-700"
-              >
-                Join Event WhatsApp Group
-              </motion.a>
+            {/* Action Buttons Container */}
+            <div className="flex flex-col md:flex-row gap-6 w-full justify-center items-center">
+              {/* Register Button (Primary) */}
+              <Link href="/registeration" className="w-full max-w-xs md:order-2">
+                <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.5)" }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xl font-bold tracking-wide shadow-xl shadow-blue-900/20 border border-white/10 transition-all"
+                >
+                  Register Now
+                </motion.button>
+              </Link>
 
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-                className="mt-3 text-xs text-white/60 max-w-xs text-center leading-relaxed bg-white/5 px-3 py-1 rounded-lg backdrop-blur-sm border border-white/5"
-              >
-                Stay updated with all announcements, important details, and event
-                discussions.
-              </motion.p>
-            </motion.div>
-
-            {/* REGISTER BUTTON */}
-            <Link href="/registeration" className="w-full max-w-sm">
-              <motion.button
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                whileHover={{ scale: 1.06 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ duration: 0.5 }}
-                className="group relative flex justify-center items-center gap-3 bg-blue-700 hover:bg-blue-600 text-white w-full py-3 sm:py-4 rounded-full text-lg sm:text-xl font-bold shadow-lg border-4 border-blue-950 shadow-blue-900/30"
-              >
-                Register Now
-              </motion.button>
-            </Link>
+              {/* WhatsApp Button (Secondary) */}
+              <motion.div className="relative w-full max-w-xs md:order-1 flex flex-col items-center">
+                <motion.a
+                  href={whatsappGroupLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.02, backgroundColor: "rgba(30, 41, 59, 0.8)" }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full flex items-center justify-center gap-2 py-4 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 backdrop-blur-md border border-slate-700 text-blue-200 font-semibold text-base transition-colors"
+                >
+                  <span>Join WhatsApp Group</span>
+                </motion.a>
+                {/* <p className="mt-2 text-[10px] md:text-xs text-slate-400 max-w-[200px] text-center leading-tight">
+                  Join for announcements
+                </p> */}
+              </motion.div>
+            </div>
           </motion.div>
         </div>
       </main>
