@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import background from "@/public/trapped-bg.png";
 import GalleryCarousel from "@/components/GalleryCarousel";
+import InfoPanel from "@/components/InfoPanel";
 
 const whatsappGroupLink="https://chat.whatsapp.com/DaeP2oi13EE9kRT5GeCjf1"
 // Navbar links
@@ -201,6 +202,8 @@ const Home = () => {
             </div>
           </motion.div>
         </div>
+
+        <InfoPanel />
 
         <GalleryCarousel />
       </main>
