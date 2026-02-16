@@ -27,7 +27,7 @@ const Registration_form = () => {
   const handleMemberChange = (
     index: number,
     field: keyof Member,
-    value: string
+    value: string,
   ) => {
     const updated = [...members];
     updated[index][field] = value;
@@ -63,9 +63,16 @@ const Registration_form = () => {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     for (const m of members) {
-      if (!m.name || !m.roll || !m.email) {
+      if (!m.name.trim() || !m.roll.trim() || !m.email.trim()) {
         toast.error("All member fields are required");
+        return;
+      }
+
+      if (!emailRegex.test(m.email)) {
+        toast.error(`Invalid email format for ${m.name || "a member"}`);
         return;
       }
     }
@@ -171,7 +178,7 @@ const Registration_form = () => {
                     onChange={(e) =>
                       handleMemberChange(index, "email", e.target.value)
                     }
-                    placeholder="rollno@kiit.ac.in"
+                    placeholder="abc@gmail.com"
                     className="bg-black/20 border-white/20 text-white"
                   />
                 </Field>
