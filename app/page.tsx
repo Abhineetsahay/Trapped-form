@@ -33,20 +33,13 @@ const Home = () => {
       className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-green-500 selection:text-black"
       id="home"
     >
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <Image
-          src={background}
-          alt="Background"
-          fill
-          priority
-          placeholder="blur"
-          className="object-cover brightness-75"
-        />
-      </div>
+      {/* Background Gradient */}
+      <div className="fixed inset-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-[#0a0a0a] to-black z-0 pointer-events-none" />
 
-      {/* NAVBAR */}
-      <nav className="sticky top-0 left-0 right-0 z-50 px-4 py-3">
+      {/* Content Wrapper */}
+      <div className="relative z-10 w-full">
+        {/* NAVBAR */}
+        <nav className="sticky top-0 left-0 right-0 z-50 px-4 py-3">
         <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -236,6 +229,7 @@ const Home = () => {
 
 
       </main>
+      </div>  
     </div>
   );
 };
