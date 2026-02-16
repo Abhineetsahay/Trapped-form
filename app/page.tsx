@@ -3,8 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import gfgLogo from "@/public/image.png";
-import background from "@/public/trapped-story.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, X } from "lucide-react";
 const whatsappGroupLink="https://chat.whatsapp.com/DaeP2oi13EE9kRT5GeCjf1"
 // Navbar links
@@ -18,19 +17,11 @@ const navLinks = [
 ];
 
 const Home = () => {
-  const [isUserRegistered, setIsUserRegistered] = useState<boolean>(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      const value = localStorage.getItem("isRegistrated");
-      setIsUserRegistered(value === "true");
-    })();
-  }, []);
 
   return (
     <div
-      className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-green-500 selection:text-black"
+      className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-cyan-500 selection:text-black"
       id="home"
     >
       {/* Background Gradient */}
@@ -64,7 +55,7 @@ const Home = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="hover:text-green-400 transition-colors duration-300"
+                className="hover:text-cyan-400 transition-colors duration-300"
               >
                 {link.name}
               </Link>
@@ -76,7 +67,7 @@ const Home = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="hidden md:block bg-green-600 hover:bg-green-500 text-white px-5 py-2 rounded-full text-xs font-bold shadow-lg"
+              className="hidden md:block bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-full text-xs font-bold shadow-lg shadow-blue-500/20"
             >
               Contact Us
             </motion.button>
@@ -103,14 +94,14 @@ const Home = () => {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-green-400"
+                className="hover:text-cyan-400"
               >
                 {link.name}
               </Link>
             ))}
 
             <Link href="https://www.instagram.com/gfg_kiit/" target="_blank">
-              <button className="w-full bg-green-600 py-2 rounded-lg text-white font-semibold">
+              <button className="w-full bg-blue-600 py-2 rounded-lg text-white font-semibold">
                 Contact Us
               </button>
             </Link>
@@ -120,13 +111,13 @@ const Home = () => {
 
       {/* MAIN CONTENT */}
       <main className="flex flex-col items-center min-h-screen relative w-full pt-28 pb-20">
-        <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center">
+        <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center gap-12">
           {/* HERO IMAGE */}
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-full max-w-lg aspect-50/25 mb-12"
+            className="relative w-full max-w-lg aspect-[2/1]"
           >
             <Image
               src="/trapped-hero-image.png"
@@ -137,97 +128,81 @@ const Home = () => {
             />
           </motion.div>
 
-          {/* Pokémon + TEXT */}
-          <div className="relative w-full max-w-4xl mx-auto mb-20 flex justify-center items-center">
+          {/* TEXT BLOCK WITH ANIMATION */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="text-center max-w-2xl z-10 space-y-8 flex flex-col items-center"
+          >
+            <p className="text-base md:text-xl leading-relaxed font-medium">
+              Gather your friends for the best escape room event of KIIT. Calling
+              all problem solvers, logic leaders and those who want to have a
+              good time. Brought to you by the Game Development Domain of GFG
+              KIIT.
+              <br />
+              <br />
+              <span className="font-bold text-blue-400 text-lg">
+                Event Date:
+              </span>
+              <br />
+              <span className="block mt-1">
+                • <span className="font-semibold text-blue-200">21st February (Saturday)</span>{" "}
+                — Hackathon
+              </span>
+            </p>
 
-            {/* TEXT BLOCK WITH ANIMATION */}
+            {/* Outreach Group Section */}
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-center max-w-2xl z-10 space-y-8"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
+              className="mt-2 flex flex-col items-center relative"
             >
-              <p className="text-base md:text-xl leading-relaxed font-medium ">
-                Gather your friends for the best escape room event of KIIT. Calling all problem solvers, logic leaders and those who want to have a good time.
-                <br />
-                <br />
-                <span className="font-bold text-green-900 text-lg">
-                  Event Date:
-                </span>
-                <br />
-                <span className="block mt-1">
-                  •{" "}
-                  <span className="font-semibold">
-                    21st February (Saturday)
-                  </span>{" "}
-                  — Hackathon
-                </span>
-              </p>
-
-              {/* Outreach Group Section */}
+              {/* Glow Effect */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.6, type: "spring" }}
-                className="mt-2 flex flex-col items-center relative"
+                animate={{ opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                className="absolute w-40 h-40 bg-blue-600/20 blur-3xl rounded-full -z-10"
+              />
+
+              <motion.a
+                href={whatsappGroupLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.07 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-block bg-slate-800 hover:bg-slate-700 text-blue-100 px-6 py-2 rounded-full font-semibold text-sm shadow-lg border border-slate-700"
               >
-                {/* Glow Effect */}
-                <motion.div
-                  animate={{ opacity: [0.4, 0.7, 0.4] }}
-                  transition={{ duration: 2.5, repeat: Infinity }}
-                  className="absolute w-40 h-40 bg-green-500/20 blur-3xl rounded-full -z-10"
-                />
+                Join Event WhatsApp Group
+              </motion.a>
 
-                <motion.a
-                  href={whatsappGroupLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.07 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="inline-block bg-green-700 hover:bg-green-600 text-white px-6 py-2 rounded-full font-semibold text-sm shadow-lg"
-                >
-                  Join Event WhatsApp Group
-                </motion.a>
-
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                  className="mt-3 text-xs text-white/80 max-w-xs text-center leading-relaxed
-                  bg-white/10 px-3 py-1 rounded-lg backdrop-blur-sm border border-white/10"
-                >
-                  Stay updated with all announcements, important details, and
-                  event discussions.
-                </motion.p>
-              </motion.div>
-
-              {/* REGISTER BUTTON */}
-              <div className="flex justify-center items-center gap-4 flex-col sm:flex-row w-full px-4">
-                {/* REGISTER BUTTON */}
-                <Link href="/registeration" className="w-full max-w-sm">
-                  <motion.button
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    whileHover={{ scale: 1.06 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.5 }}
-                    className="group relative flex justify-center items-center gap-3
-        bg-red-600 hover:bg-red-500 text-white 
-        w-full py-3 sm:py-4 
-        rounded-full text-lg sm:text-xl font-bold 
-        shadow-lg border-4 border-black"
-                  >
-                    Register Now
-                  </motion.button>
-                </Link>
-
-                
-              </div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-3 text-xs text-white/60 max-w-xs text-center leading-relaxed bg-white/5 px-3 py-1 rounded-lg backdrop-blur-sm border border-white/5"
+              >
+                Stay updated with all announcements, important details, and event
+                discussions.
+              </motion.p>
             </motion.div>
-          </div>
+
+            {/* REGISTER BUTTON */}
+            <Link href="/registeration" className="w-full max-w-sm">
+              <motion.button
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.5 }}
+                className="group relative flex justify-center items-center gap-3 bg-blue-700 hover:bg-blue-600 text-white w-full py-3 sm:py-4 rounded-full text-lg sm:text-xl font-bold shadow-lg border-4 border-blue-950 shadow-blue-900/30"
+              >
+                Register Now
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
-
-
       </main>
       </div>  
     </div>
