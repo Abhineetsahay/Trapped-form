@@ -20,6 +20,7 @@ type Member = {
 
 const Registration_form = () => {
   const [teamName, setTeamName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [members, setMembers] = useState<Member[]>([
     { name: "", roll: "", email: "" },
   ]);
@@ -58,6 +59,9 @@ const Registration_form = () => {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+
+    setIsSubmitting(true);
     if (!teamName.trim()) {
       toast.error("Team name is required");
       return;
@@ -90,15 +94,16 @@ const Registration_form = () => {
       });
 
       const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "Registration failed");
+        setIsSubmitting(false);
+        return;
+      }
       await fetch("/api/save-to-sheet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data.saved),
       }).catch((err) => console.log("Sheet Sync Error:", err));
-      if (!res.ok) {
-        toast.error(data.message || "Registration failed");
-        return;
-      }
 
       toast.success("Team registered successfully 🚀");
       localStorage.setItem("isRegistrated", "true");
@@ -213,6 +218,7 @@ const Registration_form = () => {
           <Button
             type="button"
             onClick={handleSubmit}
+            disabled={isSubmitting} 
             className="w-full mt-3 py-6 text-lg font-bold tracking-wide rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 bg-[length:200%_200%] hover:from-blue-500 hover:via-cyan-400 hover:to-blue-500 text-white shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(56,189,248,0.55)] border border-white/10 transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98] backdrop-blur-md md:col-span-2
   "
           >
