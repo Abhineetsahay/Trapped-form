@@ -5,6 +5,9 @@ import background from "@/public/trapped-bg.png"; // Assuming same background
 import { Download, Terminal, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
+// Configuration
+const DOWNLOAD_LINK = "#"; // EDIT THIS: Replace with your actual Mediafire/Drive link
+
 interface InstallationStep {
   title: string;
   description: string;
@@ -90,7 +93,9 @@ const DownloadPage = () => {
                 className="w-full max-w-md"
               >
                 <a 
-                  href="#" // Replace with actual download link
+                  href={DOWNLOAD_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group relative block w-full"
                 >
                   <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
