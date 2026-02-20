@@ -5,28 +5,43 @@ import background from "@/public/trapped-bg.png"; // Assuming same background
 import { Download, Terminal, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
+interface InstallationStep {
+  title: string;
+  description: string;
+  image?: string;
+}
+
 // Installation Steps Data
-const installationSteps = [
+const installationSteps: InstallationStep[] = [
   {
-    title: "Download the Game Files",
-    description: "Click the download button above to get the compressed game files (ZIP/RAR).",
-    // image: "/install-step-1.png" // Placeholder for optional image
+    title: "Download",
+    description: "Click the download button on the webpage, followed by download button on the Mediafire page to start downloading the game archive.",
+    image: "/install-steps/step-0.png"
+  },
+  {
+    title: "Navigate to the Downloaded Files",
+    description: "Go to your Downloads Folder or wherever you have downloaded the trapped_game.7z file.",
+    image: "/install-steps/step-1.jpeg"
   },
   {
     title: "Extract the Files",
-    description: "Locate the downloaded file in your downloads folder. Right-click and select 'Extract All' or use WinRAR/7-Zip to extract the contents to a folder of your choice.",
+    description: "Right Click on the file and click \"Extract All\".",
+    image: "/install-steps/step-2.jpeg"
   },
   {
-    title: "Locate the Executable",
-    description: "Open the extracted folder. Look for the application file named 'Trapped.exe' (Windows) or the main executable based on your OS.",
+    title: "Extract Archive",
+    description: "From the Extract Archive Dialog box, leave the default options, and click the Extract button.",
+    image: "/install-steps/step-3.jpeg"
   },
   {
-    title: "Run the Game",
-    description: "Double-click the executable to launch the game. If prompted by Windows Defender, click 'More Info' and then 'Run Anyway' (common for indie games).",
+    title: "Find the extracted Folder",
+    description: "Navigate to the folder that you just extracted with the name \"trapped_game\".",
+    image: "/install-steps/step-4.jpeg"
   },
   {
-    title: "Enjoy!",
-    description: "Start your escape room adventure!",
+    title: "Find and Double Click the executable",
+    description: "Open the \"trapped_game\" folder until you see \"Trapped_2.0.exe\". Double click and run it. All the best!",
+    image: "/install-steps/step5.jpeg"
   }
 ];
 
@@ -83,7 +98,7 @@ const DownloadPage = () => {
                     <Download className="w-8 h-8 text-cyan-400 group-hover:scale-110 transition-transform" />
                     <div className="flex flex-col items-start gap-1">
                       <span className="text-xl font-bold text-gray-100 group-hover:text-white">Download Game Client</span>
-                      <span className="text-xs text-slate-400 font-mono">v1.0.0 • Windows • 250MB</span>
+                      <span className="text-xs text-slate-400 font-mono">v1.0.0 • Windows </span>
                     </div>
                   </button>
                 </a>
@@ -129,14 +144,13 @@ const DownloadPage = () => {
                         <p className="text-gray-400 leading-relaxed text-sm md:text-base">
                           {step.description}
                         </p>
-                        {/* 
-                            // If images are implemented later:
-                            step.image && (
+                        
+                            {step.image && (
                                 <div className="mt-4 rounded-lg overflow-hidden border border-white/10">
                                     <Image src={step.image} alt={step.title} width={600} height={300} className="w-full" />
                                 </div>
-                            )
-                        */}
+                            )}
+                       
                       </div>
                     </div>
                   </motion.div>
