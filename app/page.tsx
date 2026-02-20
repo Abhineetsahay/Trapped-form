@@ -2,27 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import gfgLogo from "@/public/image.png";
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
 import background from "@/public/trapped-bg.png";
 import GalleryCarousel from "@/components/GalleryCarousel";
 import InfoPanel from "@/components/InfoPanel";
+import Navbar from "@/components/Navbar";
 
 const whatsappGroupLink="https://chat.whatsapp.com/DaeP2oi13EE9kRT5GeCjf1"
-// Navbar links
-const navLinks = [
-  { name: "Home", href: "#home" },
-  {
-    name: "Whatsapp",
-    href: whatsappGroupLink,
-  },
-  { name: "Alumni", href: "https://www.gfgkiit.in/alumni" },
-];
 
 const Home = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div
       className="min-h-screen relative overflow-x-hidden font-sans text-white selection:bg-cyan-500 selection:text-black"
@@ -43,87 +30,9 @@ const Home = () => {
       {/* Content Wrapper */}
       <div className="relative z-10 w-full">
         {/* NAVBAR */}
-        <nav className="sticky top-0 left-0 right-0 z-50 px-4 py-3">
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-7xl mx-auto bg-black/40 backdrop-blur-xl rounded-full px-6 py-3 flex justify-between items-center border border-white/5 shadow-2xl shadow-blue-900/10"
-        >
-          {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="relative w-12 h-12 overflow-hidden">
-              <Image
-                src={gfgLogo}
-                alt="GFG Logo"
-                fill
-                className="object-contain"
-              />
-            </div>
-          </div>
+        <Navbar />
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="hover:text-cyan-400 transition-colors duration-300"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
-
-          {/* Contact Button */}
-          <Link href="https://www.instagram.com/gfg_kiit/" target="_blank">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="hidden md:block bg-blue-600 hover:bg-blue-500 text-white px-5 py-2 rounded-full text-xs font-bold shadow-lg shadow-blue-500/20"
-            >
-              Contact Us
-            </motion.button>
-          </Link>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            {menuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
-        </motion.div>
-
-        {/* Mobile Dropdown */}
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="md:hidden bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-3xl mt-4 mx-4 p-6 flex flex-col gap-6 shadow-2xl z-50 absolute right-0 left-0"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMenuOpen(false)}
-                className="text-lg font-medium text-gray-200 hover:text-cyan-400 border-b border-white/5 pb-2 last:border-0"
-              >
-                {link.name}
-              </Link>
-            ))}
-
-            <Link href="https://www.instagram.com/gfg_kiit/" target="_blank" onClick={() => setMenuOpen(false)}>
-              <div className="w-full bg-gradient-to-r from-blue-600 to-blue-500 py-3 rounded-xl text-white font-bold text-center shadow-lg shadow-blue-500/20">
-                Contact Us
-              </div>
-            </Link>
-          </motion.div>
-        )}
-      </nav>
-
-      {/* MAIN CONTENT */}
+        {/* MAIN CONTENT */}
       <main className="flex flex-col items-center min-h-screen relative w-full pt-28 pb-20">
         <div className="w-full max-w-7xl mx-auto px-4 flex flex-col items-center justify-center gap-12">
           {/* HERO IMAGE */}
@@ -171,7 +80,7 @@ const Home = () => {
             </div>
 
             {/* Action Buttons Container */}
-            <div className="flex flex-col md:flex-row gap-6 w-full justify-center items-center">
+            <div className="flex flex-col md:flex-row gap-6 w-full justify-center items-center flex-wrap">
               {/* Register Button (Primary) */}
               <Link href="/registration" className="w-full max-w-xs md:order-2">
                 <motion.button
@@ -180,6 +89,17 @@ const Home = () => {
                   className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white text-xl font-bold tracking-wide shadow-xl shadow-blue-900/20 border border-white/10 transition-all"
                 >
                   Register Now
+                </motion.button>
+              </Link>
+
+              {/* Download Button */}
+              <Link href="/download" className="w-full max-w-xs md:order-3">
+                 <motion.button
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(168, 85, 247, 0.5)" }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white text-xl font-bold tracking-wide shadow-xl shadow-purple-900/20 border border-white/10 transition-all"
+                >
+                  Download Game
                 </motion.button>
               </Link>
 
@@ -195,9 +115,6 @@ const Home = () => {
                 >
                   <span>Join WhatsApp Group</span>
                 </motion.a>
-                {/* <p className="mt-2 text-[10px] md:text-xs text-slate-400 max-w-[200px] text-center leading-tight">
-                  Join for announcements
-                </p> */}
               </motion.div>
             </div>
           </motion.div>
