@@ -6,7 +6,7 @@ import { Download, Terminal, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 // Configuration
-const DOWNLOAD_LINK = "#"; // EDIT THIS: Replace with your actual Mediafire/Drive link
+const DOWNLOAD_LINK = "https://www.mediafire.com/file/90zhsamdtvj0evc/TRAPPED2.0(FINAL).7z/file"; // EDIT THIS: Replace with your actual Mediafire/Drive link
 
 interface InstallationStep {
   title: string;
